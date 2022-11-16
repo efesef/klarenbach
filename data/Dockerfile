@@ -1,0 +1,4 @@
+FROM postgres
+ENV POSTGRES_PASSWORD $POSTGRES_PW
+ENV POSTGRES_DB $POSTGRES_NAME
+COPY world.sql /docker-entrypoint-initdb.d/
