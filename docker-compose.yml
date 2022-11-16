@@ -11,10 +11,9 @@ services:
       - db 
   db: 
     build: ./data
-    volumes: my-post-gres-db:/data
+    volumes: 
+      - .:/data/postgres_db_volume
     environment: 
       - POSTGRES_USER=$POSTGRES_READER
-      - POSTGRES_PASSWORD=POSTGRES_PW
+      - POSTGRES_PASSWORD=$POSTGRES_PW
       - POSTGRES_NAME=$POSTGRES_DB
-  volumes: 
-    my-post-gres-db:
