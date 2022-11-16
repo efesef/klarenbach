@@ -14,6 +14,6 @@ services:
     volumes: 
       - .:/data/postgres_db_volume
     environment: 
-      - POSTGRES_USER=$POSTGRES_READER
-      - POSTGRES_PASSWORD=$POSTGRES_PW
-      - POSTGRES_NAME=$POSTGRES_DB
+      - POSTGRES_USER="${POSTGRES_READER}"
+      - POSTGRES_PASSWORD="${POSTGRES_PW}"
+      - POSTGRES_NAME="${POSTGRES_DB}"
