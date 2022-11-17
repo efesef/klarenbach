@@ -23,7 +23,7 @@ def homepage():
         port='5432'
    )
    cur = conn.cursor()
-   sql = '''SELECT count(1) FROM city;'''
+   sql = '''SELECT count(1) FROM quote;'''
    cursor.execute(sql) 
    results = cursor.fetchall()
    conn.commit()
