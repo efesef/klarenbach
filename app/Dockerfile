@@ -7,7 +7,6 @@ ENV FLASK_APP=app.py
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . /app
-EXPOSE 5001
+COPY . .
 
 CMD ["python3", "app.py"] 

@@ -1,22 +1,28 @@
 version: "3.8"
 services:
   app:
-    build: .
-    command: python app.py
+    build: ./app
+    command: python /app/app.py
     ports:
       - 5001:5001
     environment: 
-        PORT: 5001
-        FLASK_DEBUG: 1
+      - POSTGRES_USER="${POSTGRES_USER}"
+      - POSTGRES_PASSWORD="${POSTGRES_PASSWORD}"
+      - POSTGRES_DB="${POSTGRES_DB}"
     volumes:
-      - .:/flask_mvp
+      - .:/app/app_volume
+    links: 
+      - db
     depends_on: 
       - db 
   db: 
-    build: ./data
-    volumes: 
-      - .:/data/postgres_db_volume
+    image: postgres
+    ports: 
+      - 5432:5432
     environment: 
-      - POSTGRES_USER="${POSTGRES_READER}"
-      - POSTGRES_PASSWORD="${POSTGRES_PW}"
+      - POSTGRES_USER="${POSTGRES_USER}"
+      - POSTGRES_PASSWORD="${POSTGRES_PASSWORD}"
       - POSTGRES_DB="${POSTGRES_DB}"
+    volumes: 
+      - .:/data
+      - ./data/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
