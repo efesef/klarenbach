@@ -19,4 +19,4 @@ def homepage():
    return render_template('plotly.html', graphJSON=graphJSON)
 
 if __name__ == "__main__": 
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5001)

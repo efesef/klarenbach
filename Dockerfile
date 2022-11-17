@@ -8,7 +8,6 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . /app
+EXPOSE 5001
 
-EXPOSE 5000
-
-CMD ["python3", "app.py"]
+CMD ["python3", "app.py"] 
