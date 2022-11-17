@@ -1,15 +1,15 @@
 version: "3.8"
 services:
   app:
-    build: .
-    command: python app.py
+    build: ./app
+    command: python /app/app.py
     ports:
       - 5001:5001
     environment: 
         PORT: 5001
         FLASK_DEBUG: 1
     volumes:
-      - .:/flask_mvp
+      - .:/app/app_volume
     depends_on: 
       - db 
   db: 
