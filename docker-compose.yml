@@ -4,6 +4,19 @@ services:
     build: .
     command: python app.py
     ports:
-      - "5001:5001"
+      - 5001:5001
+    environment: 
+        PORT: 5001
+        FLASK_DEBUG: 1
     volumes:
       - .:/flask_mvp
+    depends_on: 
+      - db 
+  db: 
+    build: ./data
+    volumes: 
+      - .:/data/postgres_db_volume
+    environment: 
+      - POSTGRES_USER="${POSTGRES_READER}"
+      - POSTGRES_PASSWORD="${POSTGRES_PW}"
+      - POSTGRES_DB="${POSTGRES_DB}"
