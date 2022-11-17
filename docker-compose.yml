@@ -6,8 +6,12 @@ services:
     ports:
       - 5001:5001
     environment: 
-        PORT: 5001
-        FLASK_DEBUG: 1
+      POSTGRES_USER : "${POSTGRES_READER}"
+      POSTGRES_PASSWORD : "${POSTGRES_PW}"
+      POSTGRES_DB : "${POSTGRES_DB}"
+      POSTGRES_URL : "postgresql://${POSTGRES_READER}:${POSTGRES_PW}@db:5432/${POSTGRES_DB}"
+      PORT: 5001
+      FLASK_DEBUG: 1
     volumes:
       - .:/app/app_volume
     depends_on: 
@@ -17,6 +21,7 @@ services:
     volumes: 
       - .:/data/postgres_db_volume
     environment: 
-      - POSTGRES_USER="${POSTGRES_READER}"
-      - POSTGRES_PASSWORD="${POSTGRES_PW}"
-      - POSTGRES_DB="${POSTGRES_DB}"
+      POSTGRES_USER : "${POSTGRES_READER}"
+      POSTGRES_PASSWORD : "${POSTGRES_PW}"
+      POSTGRES_DB : "${POSTGRES_DB}"
+      POSTGRES_URL : "postgresql://${POSTGRES_READER}:${POSTGRES_PW}@db:5432/${POSTGRES_DB}"
