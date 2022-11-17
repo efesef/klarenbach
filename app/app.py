@@ -17,7 +17,7 @@ def homepage():
    # connect to postgres database.
    conn = psycopg2.connect(
         dbname=os.environ["POSTGRES_DB"],
-        user=os.environ["POSTGRES_READER"],
+        user=os.environ["POSTGRES_USER"],
         password=os.environ["POSTGRES_PASSWORD"],
         host='0.0.0.0',
         port='5432'
