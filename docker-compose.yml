@@ -4,7 +4,7 @@ services:
     build: .
     command: python app.py
     ports:
-      - "5001:5001"
+      - "5000:5001"
     volumes:
       - .:/flask_mvp
     depends_on: 
@@ -16,4 +16,4 @@ services:
     environment: 
       - POSTGRES_USER="${POSTGRES_READER}"
       - POSTGRES_PASSWORD="${POSTGRES_PW}"
-      - POSTGRES_NAME="${POSTGRES_DB}"
+      - POSTGRES_DB="${POSTGRES_DB}"
