@@ -24,8 +24,8 @@ def homepage():
    )
    cur = conn.cursor()
    sql = '''SELECT count(1) FROM quote;'''
-   cursor.execute(sql) 
-   results = cursor.fetchall()
+   cur.execute(sql) 
+   results = cur.fetchall()
    conn.commit()
    conn.close()
    return results 
