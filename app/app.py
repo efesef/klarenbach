@@ -19,13 +19,13 @@ def homepage():
         dbname=os.environ["POSTGRES_DB"],
         user=os.environ["POSTGRES_USER"],
         password=os.environ["POSTGRES_PASSWORD"],
-        host='0.0.0.0',
+        host='db',
         port='5432'
    )
    cur = conn.cursor()
    sql = '''SELECT count(1) FROM quote;'''
-   cursor.execute(sql) 
-   results = cursor.fetchall()
+   cur.execute(sql) 
+   results = cur.fetchall()
    conn.commit()
    conn.close()
    return results 
