@@ -2,7 +2,8 @@ import pandas as pd
 import os
 import re 
 from sqlalchemy import create_engine
-
+import warnings
+warnings.filterwarnings('ignore')
 
 def measurement_location(df):
     """
