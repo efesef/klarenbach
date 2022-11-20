@@ -1,7 +1,8 @@
 import pandas as pd
 from helper import *
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 
 def main():

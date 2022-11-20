@@ -1,9 +1,15 @@
 import pandas as pd
 import os
-import re 
+import re
 from sqlalchemy import create_engine
 import warnings
-warnings.filterwarnings('ignore')
+import logging
+
+warnings.filterwarnings("ignore")
+logging.basicConfig(
+    filename="parse.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
+)
+
 
 def measurement_location(df):
     """
@@ -65,7 +71,7 @@ def df_to_pg(df, sheets, pg_uri):
         # the first loop goes through each single sheet and extracts sheet specific data.
         try:
             table = df[sheet].iloc[1, 0]
-            #print(f"Migrating sheet {table}")
+            # print(f"Migrating sheet {table}")
             core_kpi = df[sheet].iloc[1, 1]
             column_name = df[sheet].iloc[3, 0:]
 
@@ -77,7 +83,9 @@ def df_to_pg(df, sheets, pg_uri):
                     row["range_start"][0] : row["range_end"][0],
                     row["range_start"][1] : row["range_end"][1],
                 ]
-                data_range.columns = [x.lower() if isinstance(x, str) else x for x in column_name]
+                data_range.columns = [
+                    x.lower() if isinstance(x, str) else x for x in column_name
+                ]
                 data_range["table_name"] = table
                 data_range["core_kpi"] = core_kpi
                 data_range["measurement"] = row["measurement"]
@@ -88,7 +96,9 @@ def df_to_pg(df, sheets, pg_uri):
                     var_name="year",
                     value_name="value",
                 )
-                data_range.to_sql("umwelt_panels", engine, if_exists = 'append', index=False)
+                data_range.to_sql(
+                    "umwelt_panels", engine, if_exists="append", index=False
+                )
 
         except Exception as err:
-            print(err)
+            logging.error("Exception occurred", exc_info=True)
