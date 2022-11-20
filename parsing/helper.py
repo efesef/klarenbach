@@ -77,19 +77,18 @@ def df_to_pg(df, sheets, pg_uri):
                     row["range_start"][0] : row["range_end"][0],
                     row["range_start"][1] : row["range_end"][1],
                 ]
-                data_range.columns = column_name
-                data_range["table"] = table
+                data_range.columns = [x.lower() if isinstance(x, str) else x for x in column_name]
+                data_range["table_name"] = table
                 data_range["core_kpi"] = core_kpi
                 data_range["measurement"] = row["measurement"]
 
                 data_range = pd.melt(
                     data_range,
-                    id_vars=["table", "core_kpi", "measurement", "Land"],
+                    id_vars=["table_name", "core_kpi", "measurement", "land"],
                     var_name="year",
                     value_name="value",
                 )
-
-                data_range.to_sql("umwelt_panels", engine)
+                data_range.to_sql("umwelt_panels", engine, if_exists = 'append', index=False)
 
         except Exception as err:
-            pass
+            print(err)

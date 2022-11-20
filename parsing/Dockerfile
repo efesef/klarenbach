@@ -1,6 +1,6 @@
 FROM python:3.9.1
 
-WORKDIR /parsing
+WORKDIR ./parsing
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
