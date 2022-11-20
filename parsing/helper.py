@@ -87,11 +87,8 @@ def df_to_pg(df, sheets, pg_uri):
                     var_name="year",
                     value_name="value",
                 )
-                #print(
-                #    f"Writing data on {core_kpi} measured as {row['measurement']} to database."
-                #)
-                # write to pg db.
+
                 df.to_sql("umwelt_panels", engine)
 
         except Exception as err:
-            #print(sheet, err)
+            pass
