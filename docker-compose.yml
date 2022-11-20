@@ -15,6 +15,23 @@ services:
       - db
     depends_on: 
       - db 
+      - parsing 
+
+  parsing: 
+    build: ./parsing
+    command: python parsing/main.py
+    ports:
+      - 5002:5002
+    environment: 
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - .:/parsing
+    links: 
+      - db
+    depends_on: 
+      - db 
   db: 
     image: postgres
     restart: always

@@ -9,26 +9,26 @@ import psycopg2
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/") 
 def homepage():
-   """ 
-   Default view of flask web application. 
-   """
-   # connect to postgres database.
-   conn = psycopg2.connect(
+    """
+    Default view of flask web application.
+    """
+    # connect to postgres database.
+    conn = psycopg2.connect(
         dbname=os.environ["POSTGRES_DB"],
         user=os.environ["POSTGRES_USER"],
         password=os.environ["POSTGRES_PASSWORD"],
-        host='db',
-        port='5432'
-   )
-   cur = conn.cursor()
-   sql = '''SELECT count(1) FROM quote;'''
-   cur.execute(sql) 
-   results = cur.fetchall()
-   conn.commit()
-   conn.close()
-   return results 
+        host="db",
+        port="5432",
+    )
+    cur = conn.cursor()
+    sql = """SELECT count(1) FROM umwelt_panels;"""
+    cur.execute(sql)
+    results = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return results
 
 
 if __name__ == "__main__":
