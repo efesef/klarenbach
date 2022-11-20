@@ -9,7 +9,7 @@ import psycopg2
 app = Flask(__name__)
 
 
-@app.route("/") 
+@app.route("/")
 def homepage():
     """
     Default view of flask web application.
