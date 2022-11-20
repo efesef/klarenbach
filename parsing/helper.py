@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 import re 
+from sqlalchemy import create_engine
+
 
 def measurement_location(df):
     """
@@ -62,7 +64,7 @@ def df_to_pg(df, sheets, pg_uri):
         # the first loop goes through each single sheet and extracts sheet specific data.
         try:
             table = df[sheet].iloc[1, 0]
-            print(f"Migrating sheet {table}")
+            #print(f"Migrating sheet {table}")
             core_kpi = df[sheet].iloc[1, 1]
             column_name = df[sheet].iloc[3, 0:]
 
@@ -85,11 +87,11 @@ def df_to_pg(df, sheets, pg_uri):
                     var_name="year",
                     value_name="value",
                 )
-                print(
-                    f"Writing data on {core_kpi} measured as {row['measurement']} to database."
-                )
+                #print(
+                #    f"Writing data on {core_kpi} measured as {row['measurement']} to database."
+                #)
                 # write to pg db.
                 df.to_sql("umwelt_panels", engine)
 
         except Exception as err:
-            print(sheet, err)
+            #print(sheet, err)

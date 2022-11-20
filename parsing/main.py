@@ -1,6 +1,5 @@
 import pandas as pd
 from helper import *
-from sqlalchemy import create_engine
 
 def main(): 
     """
