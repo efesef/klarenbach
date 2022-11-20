@@ -2,13 +2,6 @@ import pandas as pd
 import os
 import re 
 
-
-df = pd.read_excel('umweltreport_laender.xlsx', sheet_name=None)
-# extract sheets with actual data. 
-sheets = [k for k in list(df.keys()) if re.match(r"[0-9]+.[0-9]+",k)]
-
-
-
 def measurement_location(df):
     """
     Returns dictionaries of KPI measurement definitions and cells where these definitions are stored.

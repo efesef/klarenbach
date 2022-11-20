@@ -5,6 +5,6 @@ WORKDIR /parsing
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY umweltreport_laender.xlsx umweltreport_laender.xlsx 
 
 CMD ["python3", "main.py"] 
