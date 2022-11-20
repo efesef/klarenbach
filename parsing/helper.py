@@ -89,7 +89,7 @@ def df_to_pg(df, sheets, pg_uri):
                     value_name="value",
                 )
 
-                df.to_sql("umwelt_panels", engine)
+                data_range.to_sql("umwelt_panels", engine)
 
         except Exception as err:
             pass
