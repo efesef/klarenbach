@@ -23,7 +23,7 @@ def homepage():
         port="5432",
     )
     cur = conn.cursor()
-    sql = """SELECT count(1) FROM quote;"""
+    sql = """SELECT count(1) FROM umwelt_panels;"""
     cur.execute(sql)
     results = cur.fetchall()
     conn.commit()
