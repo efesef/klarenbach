@@ -16,8 +16,9 @@ services:
     depends_on: 
       - db 
       - parsing 
+
   parsing: 
-        build: ./parsing
+    build: ./parsing
     command: python parsing/main.py
     ports:
       - 5002:5002
