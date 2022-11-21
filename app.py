@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import json
-import plotly
-import plotly.express as px
 import os
 import psycopg2
+from db import *
+from api import * 
 
 app = Flask(__name__)
 
@@ -23,7 +23,7 @@ def data():
     elif request.method == "POST":
         form_data = request.form
 
-        if check_in_db("movie", "movie_name", request.form["movie"]):
+        if check_in_db('movie', 'movie_name', request.form['movie']):
             return render_template(
                 "data.html",
                 form_data=get_data_from_db(
