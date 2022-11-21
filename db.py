@@ -28,13 +28,13 @@ def run_sql(sql,query_type='select'):
 
 
 
-def check_in_db(table, column, search_query):
+def check_in_db(table_name, column_name, search_query):
     """Check if movie already exists in our db.
     Returns true if movie can be found in db (according to a lazy regex comparison).
     Returns false if not.
     """
     
-    sql = f"""SELECT count(1) FROM {table} where {column} ilike '%{search_query}%';"""
+    sql = f"""SELECT count(1) FROM {table_name} where {column_name} ilike '%{search_query}%';"""
     results = run_sql(sql, 'select') 
 
     if results[0][0] >= 1:
@@ -43,13 +43,13 @@ def check_in_db(table, column, search_query):
         return False
 
 
-def get_data_from_db(table, column, search_query):
+def get_data_from_db(table_name, column_name, search_query):
     """Check if movie already exists in our db.
     Returns none if movie is not in db.
     Returns all movies and all information from table movies if we have any matches.
     """
 
-    sql = f"""SELECT * FROM {table} where {column} ilike '%{search_query}%';"""
+    sql = f"""SELECT * FROM {table_name} where {column_name} ilike '%{search_query}%';"""
     results = run_sql(sql, 'select')
 
     if len(results) > 0:
