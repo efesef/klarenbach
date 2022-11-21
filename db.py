@@ -11,8 +11,8 @@ def run_sql(sql,query_type='select'):
         dbname=os.environ["POSTGRES_DB"],
         user=os.environ["POSTGRES_USER"],
         password=os.environ["POSTGRES_PASSWORD"],
-        host="db",
-        port="5432",
+        host='db',
+        port='5432',
     )
     cur = conn.cursor()
     cur.execute(sql)
