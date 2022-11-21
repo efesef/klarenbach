@@ -23,27 +23,28 @@ def data():
     elif request.method == "POST":
         form_data = request.form
 
-        if check_in_db('movie', 'movie_name', request.form['movie']):
+        if check_in_db('movies', 'movie_name', request.form['movies']):
             return render_template(
                 "data.html",
                 form_data=get_data_from_db(
-                    "movie", "movie_name", request.form["movie"]
+                    "movies", "movie_name", request.form["movies"]
                 ),
             )
         else:
             try:
-                tmdb_results = get_data_from_tmdb(request.form["movie"])
+                tmdb_results = get_data_from_tmdb('movies',request.form["movies"])
                 if tmdb_results == None:
                     return "Unfortunately, we cannot find your movie in TMDB either."
                 else:
                     return render_template(
                         "data.html",
                         form_data=get_data_from_db(
-                            "movie", "movie_name", request.form["movie"]
-                        ),
+                            "movies", "movie_name", request.form["movies"]
+                        )
                     )
-            except:
-                return "An error occurred. Sorry"
+            except Exception as err:
+                print(err) 
+                return ('An error occured')
 
 
 if __name__ == "__main__":
