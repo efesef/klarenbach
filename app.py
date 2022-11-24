@@ -3,7 +3,6 @@ import pandas as pd
 import json
 import os
 from db import *
-from api import *
 import logging
 from sqlalchemy import create_engine
 
@@ -43,7 +42,7 @@ def data():
                     f"Movie {form_data['movies']} needs to be looked up in TMDB",
                     exc_info=True,
                 )
-                tmdb_results = get_data_from_tmdb("movies", form_data["movies"])
+                tmdb_results = tmdb_to_postgres("movies", form_data["movies"])
 
                 if tmdb_results == None:
                     return "Unfortunately, we cannot find your movie in TMDB either."
