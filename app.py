@@ -2,10 +2,11 @@ from flask import Flask, render_template, request
 import pandas as pd
 import json
 import os
-import psycopg2
 from db import *
 from api import *
 import logging
+from sqlalchemy import create_engine
+
 
 logging.basicConfig(
     filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
@@ -42,7 +43,7 @@ def data():
                     f"Movie {form_data['movies']} needs to be looked up in TMDB",
                     exc_info=True,
                 )
-                tmdb_results = get_data_from_tmdb("movies", form_data['movies'])
+                tmdb_results = get_data_from_tmdb("movies", form_data["movies"])
 
                 if tmdb_results == None:
                     return "Unfortunately, we cannot find your movie in TMDB either."

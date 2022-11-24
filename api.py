@@ -22,9 +22,13 @@ def get_data_from_tmdb(search_category, search_query):
             return None
         else:
             for r in response["results"]:
+                uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@db:5432/{os.environ["POSTGRES_DB"]}'
+                engine = create_engine(uri,echo=True)
+
                 sql = f"""INSERT INTO {search_category} ("movie_id", "movie_name", "release_dates", "reviews")
-                      VALUES ('{r["id"]}', '{r["original_title"]}', '{r["release_date"]}', '{r["vote_average"]}')"""
-                run_sql(sql, query_type='insert')
+                      VALUES ('{r["id"]}', '{r["original_title"]}', '{r["release_date"]}', '{r["vote_average"]}') 
+                      ON CONFLICT (movie_id) DO UPDATE;"""
+                engine.execute(sql)
             return True
     else:
         raise ("Currently only service only looks at movies.")

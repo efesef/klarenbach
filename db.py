@@ -1,30 +1,21 @@
 import pandas as pd
-import psycopg2
 import os
+from sqlalchemy import create_engine
+from sqlalchemy import text
 
-
-def run_sql(sql, query_type="select"):
+def run_sql(sql):
     """
     Runs sql based on db setup.
     """
-    conn = psycopg2.connect(
-        dbname=os.environ["POSTGRES_DB"],
-        user=os.environ["POSTGRES_USER"],
-        password=os.environ["POSTGRES_PASSWORD"],
-        host="db",
-        port="5432",
-    )
-    cur = conn.cursor()
-    cur.execute(sql)
-    if query_type == "select":
-        results = cur.fetchall()
-        conn.commit()
-        conn.close()
-        return results
-    else:
-        conn.commit()
-        conn.close()
-        return True
+    uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@db:5432/{os.environ["POSTGRES_DB"]}'
+    engine = create_engine(uri,echo=True)
+
+    results = pd.read_sql(
+        text(sql),
+        con=engine
+    )        
+    return results
+
 
 
 def check_in_db(table_name, column_name, search_query):
@@ -32,15 +23,9 @@ def check_in_db(table_name, column_name, search_query):
     Returns true if movie can be found in db (according to a lazy regex comparison).
     Returns false if not.
     """
-
     sql = f"""SELECT count(1) FROM {table_name} where {column_name} ilike '%{search_query}%';"""
-    results = run_sql(sql, "select")
-
-    if results[0][0] >= 1:
-        return True
-    else:
-        return False
-
+    results = run_sql(sql)
+    return results.shape[0] >= 1
 
 def get_data_from_db(table_name, column_name, search_query):
     """Check if movie already exists in our db.
@@ -51,34 +36,9 @@ def get_data_from_db(table_name, column_name, search_query):
     sql = (
         f"""SELECT * FROM {table_name} where {column_name} ilike '%{search_query}%';"""
     )
-    results = run_sql(sql, "select")
+    results = run_sql(sql)
 
-    if len(results) > 0:
-        return results
+    if results.shape[0] >= 1:
+        return results.to_html()
     else:
         return None
-
-
-def get_columns_of_table(table_name):
-    """
-    Inputs table name and returns list of columns that can be inserted into an insert sql statement.
-    """
-    sql = f"""SELECT
-                    column_name
-                FROM
-                    information_schema.columns
-                WHERE
-                    table_name = '{table_name}';"""
-
-    results = run_sql(sql, "select")
-
-    if len(results) == 0:
-        print(f"Table {table_name} cannot be found in db schema.")
-    else:
-        column_string = ",".join([x[0] for x in results])
-        return column_string
-
-
-print(get_columns_of_table("movies"))
-print(get_data_from_db("movies", "movie_name", "tatort"))
-print(check_in_db("movies", "movie_name", "tatort"))
