@@ -12,7 +12,7 @@ def run_sql(sql):
     """
     Runs sql based on db setup.
     """
-    uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@db:5432/{os.environ["POSTGRES_DB"]}'
+    uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@{os.environ["POSTGRES_HOST"]}:5432/{os.environ["POSTGRES_DB"]}'
     engine = create_engine(uri,echo=True)
 
     results = pd.read_sql(
@@ -65,7 +65,7 @@ def tmdb_to_postgres(search_category, search_query):
             return None
         else:
             for r in response["results"]:
-                uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@db:5432/{os.environ["POSTGRES_DB"]}'
+                uri = f'postgresql://{os.environ["POSTGRES_USER"]}:{os.environ["POSTGRES_PASSWORD"]}@{os.environ["POSTGRES_HOST"]}:5432/{os.environ["POSTGRES_DB"]}'
                 engine = create_engine(uri,echo=True)
 
                 sql = f"""INSERT INTO {search_category} ("movie_id", "movie_name", "release_dates", "reviews")
