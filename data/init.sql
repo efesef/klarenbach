@@ -6,4 +6,4 @@ CREATE TABLE movies (
 );
 
 INSERT INTO movies (movie_id, movie_name, release_dates, reviews)
-VALUES ('fjaads', 'tatort', '1990-01-01 00:00:00', 5);
+VALUES ('fjaads', 'dummy', '1990-01-01 00:00:00', 5);
