@@ -35,6 +35,11 @@ class postgresTesting(unittest.TestCase):
             ["fjaads", "dummy", "1990-01-01 00:00:00", 5],
             results,
         )
+    def test_check_in_db(self): 
+        """
+        Test whether check_in_db function works as intended
+        """
+        self.assertEqual(check_in_db('movies', 'movie_name', 'dummy'), True, "Test should have rendered True")
 
 
 if __name__ == "__main__":
