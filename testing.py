@@ -1,5 +1,5 @@
 import unittest
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,text
 import os
 from db import run_sql, check_in_db
 
@@ -27,12 +27,12 @@ class postgresTesting(unittest.TestCase):
         """
         Test whether run_sql function works as intended.
         """
-        sql = """ select * from movies where movie_name = 'dummy'"""
+        sql = """ select movie_name,reviews from movies where movie_name = 'dummy'"""
 
         results = run_sql(sql)
         self.assertEqual(
             list(results.iloc[0, :]),
-            ["fjaads", "dummy", "1990-01-01 00:00:00", 5],
+            ["dummy", 5],
             results,
         )
 
@@ -41,7 +41,6 @@ class postgresTesting(unittest.TestCase):
         Test whether check_in_db function works as intended
         """
         self.assertTrue(check_in_db("movies", "movie_name", "dummy"))
-
 
 if __name__ == "__main__":
     unittest.main()
