@@ -1,5 +1,5 @@
 import unittest
-from sqlalchemy import create_engine,text
+from sqlalchemy import create_engine, text
 import os
 from db import run_sql, check_in_db
 
@@ -41,6 +41,7 @@ class postgresTesting(unittest.TestCase):
         Test whether check_in_db function works as intended
         """
         self.assertTrue(check_in_db("movies", "movie_name", "dummy"))
+
 
 if __name__ == "__main__":
     unittest.main()
