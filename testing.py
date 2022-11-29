@@ -1,7 +1,7 @@
 import unittest
 from sqlalchemy import create_engine
 import os
-from db import run_sql
+from db import run_sql, check_in_db
 
 
 class postgresTesting(unittest.TestCase):
