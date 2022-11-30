@@ -19,15 +19,9 @@ jobs:
           echo "PROJECT_NAME=combine" >> $GITHUB_ENV
           echo "${GITHUB_WORKSPACE}/bin" >> $GITHUB_PATH
 
-      - name: Start docker containers
-        run: |
-          echo "VERSION=$(versioninfo)" >> $GITHUB_ENV
-          docker-compose up
-          sleep 10  # wait for database to be ready
-
       - name: Run backend unit tests
         run: |
-          docker exec klarenbach-app sh -c "python3 testing.py"
+          python3 testing.py
 
       - if: always()
         uses: ouzi-dev/commit-status-updater@v1.1.0
