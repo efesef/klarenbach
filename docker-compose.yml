@@ -28,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=klarenbach_db
     volumes: 
-      - pg_db:/data
+      - pg_db:/var/lib/postgresql
       - ./data/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
 
 volumes:
