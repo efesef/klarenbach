@@ -24,7 +24,7 @@ jobs:
 
       - name: Run backend unit tests
         run: |
-          docker exec -it $(docker ps -aqf "name=klarenbach_app") -t bash -c "python3 testing.py"
+          docker exec -i $(docker ps -aqf "name=klarenbach_app") bash -c "python3 testing.py"
 
       - name: Stop containers
         if: always()
