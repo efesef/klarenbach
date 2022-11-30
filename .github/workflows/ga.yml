@@ -19,9 +19,16 @@ jobs:
           echo "PROJECT_NAME=combine" >> $GITHUB_ENV
           echo "${GITHUB_WORKSPACE}/bin" >> $GITHUB_PATH
 
+      - name: Start containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
+
       - name: Run backend unit tests
         run: |
-          python3 testing.py
+          docker exec -it $(docker ps -aqf "name=klarenbach-app") bash -c "python3 testing.py"
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
 
       - if: always()
         uses: ouzi-dev/commit-status-updater@v1.1.0
